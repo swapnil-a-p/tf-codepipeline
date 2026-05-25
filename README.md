@@ -43,22 +43,35 @@ The current configuration includes:
 
 ```mermaid
 flowchart LR
+    classDef exec fill:#eef6ff,stroke:#4d8dff,color:#133768,stroke-width:2px;
+    classDef control fill:#24324a,stroke:#94b7ff,color:#f3f8ff,stroke-width:2px;
+    classDef infra fill:#17382c,stroke:#63d3a0,color:#effff7,stroke-width:2px;
+    classDef security fill:#2e243d,stroke:#c59aff,color:#fbf3ff,stroke-width:2px;
+
     TF[Terraform CLI / CI runner]
     STATE[(Remote S3 backend)]
     VARS[Input variables]
-    PLAN[Terraform plan/apply]
-    BUCKET[Artifact S3 bucket]
-    VER[Bucket versioning]
-    ENC[Server-side encryption]
-    PAB[Public access block]
+    PLAN[Terraform plan / apply]
+
+    subgraph AWS[Provisioned AWS Resources]
+        BUCKET[Artifact S3 bucket]
+        VER[Bucket versioning]
+        ENC[Server-side encryption]
+        PAB[Public access block]
+    end
 
     TF --> PLAN
     STATE --> PLAN
     VARS --> PLAN
     PLAN --> BUCKET
-    PLAN --> VER
-    PLAN --> ENC
-    PLAN --> PAB
+    BUCKET --> VER
+    BUCKET --> ENC
+    BUCKET --> PAB
+
+    class TF,PLAN exec;
+    class STATE,VARS control;
+    class BUCKET,VER infra;
+    class ENC,PAB security;
 ```
 
 ## Usage
