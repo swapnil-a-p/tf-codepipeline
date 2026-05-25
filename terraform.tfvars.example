@@ -1,0 +1,7 @@
+artifact_bucket_name = "replace-with-your-artifact-bucket-name"
+
+tags = {
+  Project     = "tf-codepipeline"
+  ManagedBy   = "Terraform"
+  Environment = "sandbox"
+}
