@@ -11,6 +11,24 @@ The current Terraform code provisions:
 - server-side encryption with SSE-S3
 - public access blocking
 
+```mermaid
+flowchart TD
+    RUN[Terraform execution]
+    BACKEND[(Remote state bucket)]
+    ART[(Artifact bucket)]
+    V[Versioning enabled]
+    E[Default encryption]
+    P[Public access blocked]
+    TAGS[Standardized tags]
+
+    RUN --> BACKEND
+    RUN --> ART
+    ART --> V
+    ART --> E
+    ART --> P
+    ART --> TAGS
+```
+
 ## Why This Matters
 
 Even a minimal AWS delivery pipeline benefits from a predictable artifact store. This repository is intentionally small, but it demonstrates several patterns expected in real Terraform work:

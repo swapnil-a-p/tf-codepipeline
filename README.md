@@ -39,6 +39,28 @@ The current configuration includes:
 - remote state usage
 - reusable infrastructure patterns suitable for CI/CD building blocks
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    TF[Terraform CLI / CI runner]
+    STATE[(Remote S3 backend)]
+    VARS[Input variables]
+    PLAN[Terraform plan/apply]
+    BUCKET[Artifact S3 bucket]
+    VER[Bucket versioning]
+    ENC[Server-side encryption]
+    PAB[Public access block]
+
+    TF --> PLAN
+    STATE --> PLAN
+    VARS --> PLAN
+    PLAN --> BUCKET
+    PLAN --> VER
+    PLAN --> ENC
+    PLAN --> PAB
+```
+
 ## Usage
 
 Initialize Terraform:
